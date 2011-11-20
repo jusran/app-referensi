@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+                  
+    <context:property-placeholder location="classpath*:ref-jdbc.properties" />
+
+    <bean id="dsRefer" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
+        <property name="driverClassName" value="${ref.driver}"/>
+        <property name="url" value="${ref.url}"/>
+        <property name="username" value="${ref.username}"/>
+        <property name="password" value="${ref.password}"/>
+        <property name="initialSize" value="20"></property>
+        <property name="maxActive" value="80"></property>
+        <property name="maxIdle" value="20"></property>
+        <property name="minIdle" value="4"></property>
+        <property name="maxWait" value="60"></property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dsRefer"></property>
+    </bean>
+
+</beans>
+
